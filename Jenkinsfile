@@ -1,14 +1,14 @@
-node {
-  stage('SCM') {
-    checkout scm
-  }
-  stage('SonarQube Analysis') {
-    def scannerHome = tool 'SonarScanner';
-    withSonarQubeEnv() {
-    sh "${scannerHome}/bin/sonar-scanner"
-    }
-  }
-}
+// node {
+//   stage('SCM') {
+//     checkout scm
+//   }
+//   stage('SonarQube Analysis') {
+//     def scannerHome = tool 'SonarScanner';
+//     withSonarQubeEnv() {
+//     sh "${scannerHome}/bin/sonar-scanner"
+//     }
+//   }
+// }
 
 // pipeline {
 //     agent any
@@ -39,3 +39,32 @@ node {
 //   }
 //     }
 // }
+
+
+pipeline {
+    agent any
+    
+    stages {
+        stage('Check SonarQube Connection') {
+            steps {
+                script {
+                    try {
+                        // Replace 'http://localhost:9000' with the URL of your SonarQube server
+                        def sonarqubeURL = 'http://localhost:9001'
+                        
+                        // Try to connect to SonarQube server
+                        sh "curl -s -o /dev/null $sonarqubeURL"
+                        
+                        // If the connection is successful, print a success message
+                        echo "SonarQube is connected successfully"
+                    } catch (Exception e) {
+                        // If the connection fails, print an error message
+                        echo "Failed to connect to SonarQube"
+                        error "Failed to connect to SonarQube: ${e.message}"
+                    }
+                }
+            }
+        }
+    }
+}
+
