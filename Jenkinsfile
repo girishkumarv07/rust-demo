@@ -50,7 +50,7 @@ pipeline {
                 script {
                     try {
                         // Replace 'http://localhost:9000' with the URL of your SonarQube server
-                        def sonarqubeURL = 'http://localhost:9001'
+                        def sonarqubeURL = 'http://localhost:9002/'
                         
                         // Try to connect to SonarQube server
                         sh "curl -s -o /dev/null $sonarqubeURL"
