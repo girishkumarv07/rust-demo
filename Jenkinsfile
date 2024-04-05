@@ -3,7 +3,7 @@
 //     checkout scm
 //   }
 //   stage('SonarQube Analysis') {
-//     def scannerHome = tool 'SonarScanner';
+//     def scannerHome = tool 'SonarQube_Server';
 //     withSonarQubeEnv() {
 //       sh "${scannerHome}/bin/sonar-scanner"
 //     }
@@ -31,5 +31,11 @@ pipeline {
                 }
             }
         }
+          stage('SonarQube Analysis') {
+    def scannerHome = tool 'SonarQube_Server';
+    withSonarQubeEnv() {
+      sh "${scannerHome}/bin/sonar-scanner"
+    }
+  }
     }
 }
