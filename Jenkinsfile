@@ -5,7 +5,11 @@ node {
   stage('SonarQube Analysis') {
     def scannerHome = tool 'SonarScanner';
     withSonarQubeEnv() {
-      sh "${scannerHome}/bin/sonar-scanner"
+      sh "${scannerHome}/bin/sonar-scanner \
+  -Dsonar.projectKey=Sonarqube-jenkins \
+  -Dsonar.sources=. \
+  -Dsonar.host.url=http://localhost:9001 \
+  -Dsonar.token=sqp_7cb3df9eeb6b47623fb4284f7e86218c791ebb5d"
     }
   }
 }
